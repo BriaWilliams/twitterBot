@@ -3,13 +3,23 @@
 from config import getApi
 import os
 import requests
+import random
 
 api = getApi()
 
-req = requests.get('https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&camera=fhaz&api_key=DEMO_KEY&fbclid=IwAR3gRKZW3ULPYn9fvdh1lQFsjtoQhM9GelkH8EQonQKlgpUbQGBQ1mplQgI')
+nasaAPI = 'Rn9kSqjsLbjwABsvb2DFstOBjht6VRkesybxBSKh'
+
+rovers = ['curiosity', 'opportunity', 'spirit']
+cameras = ['fhaz', 'rhaz', 'mast', 'chemcam', 'mahli', 'mardi', 'navcam', 'pancam', 'minites']
+
+randomCam = random.choice(cameras)
+
+req = requests.get(f'https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&camera={randomCam}&api_key={nasaAPI}')
 reqDict = req.json()
-print(reqDict['photos'][0]['id'])
-#print(reqDict[camera])
+
+#print(reqDict['photos'][0]['id'])
+print(req.url)
+
 
 
 #{'photos':
