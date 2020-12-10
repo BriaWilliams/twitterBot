@@ -4,58 +4,54 @@ from config import getApi
 import os
 import requests
 import random
+import urllib.request
 
 api = getApi()
 
 nasaAPI = 'Rn9kSqjsLbjwABsvb2DFstOBjht6VRkesybxBSKh'
 
-rovers = ['curiosity', 'opportunity', 'spirit']
-cameras = ['fhaz', 'rhaz', 'mast', 'chemcam', 'mahli', 'mardi', 'navcam', 'pancam', 'minites']
+rovers = {'curiosity': 
+                ['fhaz', 'rhaz', 'mast', 'chemcam', 'mahli', 'mardi', 'navcam'], 
+          'opportunity': 
+                ['fhaz', 'rhaz','navcam', 'pancam', 'minites'],  
+          'spirit':
+                ['fhaz', 'rhaz','navcam', 'pancam', 'minites']
+         }
 
-randomCam = random.choice(cameras)
+randomRovers = random.choice(list(rovers))
+def getRoverCam(rovers):
+    '''Takes in dictionary with rovers as keys and cameras as values.
+        If a specific rover key is selected then a random camera will be selected from its list of values.
+         Returns chosen camera as a string'''
 
-req = requests.get(f'https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&camera={randomCam}&api_key={nasaAPI}')
+    if randomRovers == "curiosity":
+        randomCam= random.choice(rovers['curiosity'])
+
+    elif randomRovers == "opportunity":
+        randomCam= random.choice(rovers['opportunity'])
+
+    else:
+        randomCam = random.choice(rovers['spirit'])
+
+    print(randomCam)
+    return randomCam
+
+req = requests.get(f'https://api.nasa.gov/mars-photos/api/v1/rovers/{randomRovers}/photos?sol=1000&camera={getRoverCam(rovers)}&api_key=DEMO_KEY')
 reqDict = req.json()
-
-#print(reqDict['photos'][0]['id'])
+#reqURL = req.url()
 print(req.url)
 
+#imageURL = (reqDict['photos'][0]['img_src'])
+#urllib.request.urlretrieve(imageURL, 'mars.jpg')
+#print(type(imageURL))
 
-
-#{'photos':
-#           [{'id': 102693,
-#           'sol': 1000,
-#           'camera':
-#               {'id': 20,
-#               'name': 'FHAZ',
-#               'rover_id': 5,
-#               'full_name': 'Front Hazard Avoidance Camera'},
-#           'img_src': 'http://mars.jpl.nasa.gov/msl-raw-images/proj/msl/redops/ods/surface/sol/01000/opgs/edr/fcam/FLB_486265257EDR_F0481570FHAZ00323M_.JPG',
-#           'earth_date': '2015-05-30',
-#           'rover':
-#               {'id': 5,
-#               'name': 'Curiosity',
-#               'landing_date': '2012-08-06',
-#               'launch_date': '2011-11-26',
-#               'status': 'active'}},
-#           {'id': 102694,
-#           'sol': 1000,
-#           'camera':
-#               {'id': 20,
-#               'name': 'FHAZ',
-#               'rover_id': 5,
-#               'full_name': 'Front Hazard Avoidance Camera'},
-#           'img_src': 'http://mars.jpl.nasa.gov/msl-raw-images/proj/msl/redops/ods/surface/sol/01000/opgs/edr/fcam/FRB_486265257EDR_F0481570FHAZ00323M_.JPG',
-#           'earth_date': '2015-05-30',
-#           'rover':
-#               {'id': 5,
-#               'name': 'Curiosity',
-#               'landing_date': '2012-08-06',
-#               'launch_date': '2011-11-26',
-#               'status': 'active'}}]}
 
 # def postStatus(update):
 #     #status = api.PostUpdate(update)
 #     print(status)
 
-#postStatus("Hi, I'm BriaBot")
+def postPhoto(update):
+    print(api.PostUpdate(update, media ="mars.jpg"))
+    os.remove("mars.jpg")
+
+#postPhoto("From #BriaBot: Did you know that the Mars Rover took this photo?")
