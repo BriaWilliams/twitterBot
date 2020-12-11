@@ -1,81 +1,64 @@
 #!usr/bin/python
 
-from config import getApi
+from util import *
 import os
+import urllib.request
+import time
 import requests
 import random
-import urllib.request
+from config import getApi
+
 
 api = getApi()
-
 nasaAPI = 'Rn9kSqjsLbjwABsvb2DFstOBjht6VRkesybxBSKh'
 
-rovers = {'curiosity': 
-                ['fhaz', 'rhaz', 'mast', 'chemcam', 'mahli', 'mardi', 'navcam'], 
-          'opportunity': 
-                ['fhaz', 'rhaz','navcam', 'pancam', 'minites'],  
+rovers = {'curiosity':
+                ['fhaz', 'rhaz', 'mast', 'chemcam', 'mahli', 'mardi', 'navcam'],
+          'opportunity':
+                ['fhaz', 'rhaz','navcam', 'pancam', 'minites'],
           'spirit':
                 ['fhaz', 'rhaz','navcam', 'pancam', 'minites']
          }
 
 randomRovers = random.choice(list(rovers))
-def getRoverCam(rovers):
+print(randomRovers)
+
+def getRandomDic():
     '''Takes in dictionary with rovers as keys and cameras as values.
         If a specific rover key is selected then a random camera will be selected from its list of values.
          Returns chosen camera as a string'''
-
     if randomRovers == "curiosity":
-        randomCam= random.choice(rovers['curiosity'])
-
+        randomCam = random.choice(rovers['curiosity'])
     elif randomRovers == "opportunity":
         randomCam= random.choice(rovers['opportunity'])
-
     else:
         randomCam = random.choice(rovers['spirit'])
-
-    print(randomCam)
-    return randomCam
-
-req = requests.get(f'https://api.nasa.gov/mars-photos/api/v1/rovers/{randomRovers}/photos?sol=1000&camera={getRoverCam(rovers)}&api_key=DEMO_KEY')
-reqDict = req.json()
-#reqURL = req.url()
-print(req.url)
-
-def getImage(reqDict):
-    '''Gets the number of photos within the 'photos' key and
-    returns a number based on the length of the list if values'''
-
-    numOfImages = 0
-
-    if reqDict['photos'] == []:
-        print('Aint none here')
-        return numOfImages
-
-    elif len(reqDict['photos']) == 1:
-        numOfImages == 1
-        print("it's one " + str(numOfImages))
-
-    else:
-        numOfImages = random.randint(1, len(reqDict['photos']))
-        print("This is the max length" + str(len(reqDict['photos'])))
+    req = requests.get(f'https://api.nasa.gov/mars-photos/api/v1/rovers/{randomRovers}/photos?sol=1000&camera={randomCam}&api_key={nasaAPI}')
+    return req.json()
 
 
-    print("Here is your index " + str(numOfImages))
-    return numOfImages
+def postPhoto():
+    dictionary = getRandomDic()
+    cameraName = ''
+    if dictionary['photos'] != []:
+        if len(dictionary['photos']) == 1:
+            cameraName = dictionary['photos'][0]['camera']['full_name']
+            imageURL = dictionary['photos'][0]['img_src']
+            urllib.request.urlretrieve(imageURL, 'mars.jpg')
+            status = f"From #BriaBot: The {randomRovers.capitalize()} Rover took this photo using the {cameraName}."
+            api.PostUpdate(status, media="mars.jpg")
+            os.remove("mars.jpg")
+        else:
+            index = random.randint(0, len(dictionary['photos']) - 1)
+            cameraName = dictionary['photos'][index]['camera']['full_name']
+            imageURL = dictionary['photos'][index]['img_src']
+            urllib.request.urlretrieve(imageURL, 'mars.jpg')
+            status = f"From #BriaBot: The {randomRovers.capitalize()} Rover took this photo using the {cameraName}."
+            api.PostUpdate(status, media="mars.jpg")
+            os.remove("mars.jpg")
 
-getImage(reqDict)
+while True:
+   postPhoto()
+   getRandomDic()
+   time.sleep(60)
 
-#imageURL = (reqDict['photos'][0]['img_src'])
-#urllib.request.urlretrieve(imageURL, 'mars.jpg')
-#print(type(imageURL))
-
-
-# def postStatus(update):
-#     #status = api.PostUpdate(update)
-#     print(status)
-
-def postPhoto(update):
-    print(api.PostUpdate(update, media ="mars.jpg"))
-    os.remove("mars.jpg")
-
-#postPhoto("From #BriaBot: Did you know that the Mars Rover took this photo?")
