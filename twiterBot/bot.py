@@ -41,6 +41,30 @@ reqDict = req.json()
 #reqURL = req.url()
 print(req.url)
 
+def getImage(reqDict):
+    '''Gets the number of photos within the 'photos' key and
+    returns a number based on the length of the list if values'''
+
+    numOfImages = 0
+
+    if reqDict['photos'] == []:
+        print('Aint none here')
+        return numOfImages
+
+    elif len(reqDict['photos']) == 1:
+        numOfImages == 1
+        print("it's one " + str(numOfImages))
+
+    else:
+        numOfImages = random.randint(1, len(reqDict['photos']))
+        print("This is the max length" + str(len(reqDict['photos'])))
+
+
+    print("Here is your index " + str(numOfImages))
+    return numOfImages
+
+getImage(reqDict)
+
 #imageURL = (reqDict['photos'][0]['img_src'])
 #urllib.request.urlretrieve(imageURL, 'mars.jpg')
 #print(type(imageURL))
