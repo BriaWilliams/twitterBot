@@ -1,7 +1,7 @@
 import twitter
 
 def getApi():
-    return twitter.Api(consumer_key='lTUO5moAC5DbbuGBW0XlJTepA',
-                        consumer_secret='ITXSKsjDnW3Fi9oVNznH55qZ9IBfDSWVS1uhJmLrIEUI2CAnfN',
-                        access_token_key='1309542329653526531-VXSD1Qyo419IsDT4B5VtLdUmAnqiNy',
-                        access_token_secret='HF1DNlzQHaqC4azgdAGI9DVwGJNcBTSLYB0pqHdIIWqJp')
+    return twitter.Api(consumer_key='yb33hvkIjNKu922ATZOj8LSEm',
+                        consumer_secret='oFtlrhM723Yob8Spf4HOMRJyRFgMhdg1FU1yTnh5L8Hq1xpfLo',
+                        access_token_key='1338233806172676098-V7FEIfTIz9w3NerLxS9LIVjTVqpKaW',
+                        access_token_secret='Zljyyhm8GjM1SnOwAZ8wmXv9WNkcbb6XA4AvjobumAgdR')
