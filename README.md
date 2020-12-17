@@ -33,8 +33,8 @@ Before running the bot, you must first set it up so it can connect to the Twitte
       
     import twitter
 		
-		def getApi():
-    return twitter.Api(consumer_key='yb33hvkIjNKu741ATZOj2LSEm',
+    def getApi():
+    	return twitter.Api(consumer_key='yb33hvkIjNKu741ATZOj2LSEm',
                         consumer_secret='oFtlrhM723Yob7Spf4HOMRJyRFgMhdg2FU1yTnh5L8Hq1xpfLo',
                         access_token_key='1338233546172676098-V7FEIfTIz9w3NerLxS8LIVjTVqpKaW',
                         access_token_secret='Zljyyhm8GjM1SnOwAZ8wmXv9WNkcbb6XA4AvjobumAgdR')
@@ -45,7 +45,7 @@ Before running the bot, you must first set it up so it can connect to the Twitte
 To create an instance of the bot. create a file called bot.py:
 
     import os
-		from config import getApi
+    from config import getApi
     
     api = getApi()
 
