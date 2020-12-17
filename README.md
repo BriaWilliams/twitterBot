@@ -49,8 +49,36 @@ To create an instance of the bot. create a file called bot.py:
     
     api = getApi()
 
-To test that your connection to Twitter is wortking, try running this simple status update function.
-	#
+To test that your connection to Twitter is working, try running this simple status update function in the bot.py file.
+```
+def postTweet(update):
+	status = api.PostUpdate(update)
+	
+postTweet("Hi, I'm a test tweet.") 
+```
+
+### Calling NASA API
+
+You will need to generate an API key at https://api.nasa.gov/.
+
+1. Retrieve key from your email.
+2. Choose which NASA API that you will be using for your bot; I used "Mars Rover Photos".
+3. Make a query to the API using the key. Here are some example queries from the NASA website. 
+
+*https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=DEMO_KEY
+
+*https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&camera=fhaz&api_key=DEMO_KEY
+
+4. Replace DEMO_KEY with NASA key to access API.
+5. Create function that tweet data that you queried. (See https://github.com/BriaWilliams/twitterBot/blob/main/twiterBot/bot.py)
+
+
+### Future Project Updates:
+
+In the near future, I will actually deploy the Twitter bot so that it is no longer running from my local. This will make the bot truly independent. 
+
+I also want to have different text for the tweets so that the posts don't all have the exact same text.
+
 
   
     
