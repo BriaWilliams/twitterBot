@@ -65,9 +65,9 @@ You will need to generate an API key at https://api.nasa.gov/.
 2. Choose which NASA API that you will be using for your bot; I used "Mars Rover Photos".
 3. Make a query to the API using the key. Here are some example queries from the NASA website. 
 
-*https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=DEMO_KEY
+	* https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=DEMO_KEY
 
-*https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&camera=fhaz&api_key=DEMO_KEY
+	* https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&camera=fhaz&api_key=DEMO_KEY
 
 4. Replace DEMO_KEY with NASA key to access API.
 5. Create function that tweet data that you queried. (See https://github.com/BriaWilliams/twitterBot/blob/main/twiterBot/bot.py)
