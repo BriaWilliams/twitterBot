@@ -79,7 +79,7 @@ You will need to generate an API key at https://api.nasa.gov/.
 
 * I also want to have different text for the tweets so that the posts don't all have the exact same text.
 
-
+[![Profile Screenshot](https://github.com/BriaWilliams/twitterBot/main/twiterBot/dirtonMars2.PNG)](#features)
   
     
 ## Have questions? Need help with the bot?
